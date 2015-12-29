@@ -1,0 +1,18 @@
+FROM ubuntu:latest
+MAINTAINER hello@heiber.im
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update -qq && apt-get install -y software-properties-common
+
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
+RUN apt-add-repository -y ppa:ondrej/php-7.0 && apt-get update -qq
+
+RUN apt-get install -y php7.0-fpm php7.0-gd php7.0-mysql
+ADD fpm-www.conf /etc/php/7.0/fpm/pool.d/www.conf
+
+EXPOSE 9000
+CMD ["/usr/sbin/php-fpm7.0"]

@@ -1,0 +1,24 @@
+FROM ubuntu:latest
+MAINTAINER hello@heiber.im
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update -qq && apt-get install -y wget
+
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
+RUN echo "deb http://nginx.org/packages/ubuntu/ trusty nginx" > /etc/apt/sources.list.d/nginx.list && \
+    wget -q http://nginx.org/keys/nginx_signing.key -O- | apt-key add -
+
+RUN apt-get update -qq && apt-get install nginx
+
+RUN ln -sf /dev/stdout /var/log/nginx/access.log
+RUN ln -sf /dev/stderr /var/log/nginx/error.log
+
+VOLUME ["/var/cache/nginx"]
+
+EXPOSE 80 443
+
+CMD ["/bin/bash"]   
