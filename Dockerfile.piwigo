@@ -1,0 +1,13 @@
+FROM busybox:latest
+MAINTAINER hello@heiber.im
+
+RUN wget http://piwigo.org/download/dlcounter.php?code=latest -O piwigo.zip && \
+    unzip piwigo.zip -d /var/www && \
+    rm piwigo.zip
+
+VOLUME [
+  "/var/www/piwigo/galleries",
+  "/var/www/piwigo/upload"
+]
+
+CMD ["/bin/true"]
