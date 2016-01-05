@@ -2,23 +2,20 @@ piwigo-nginx:
   build: .
   dockerfile: Dockerfile.nginx
   container_name: piwigo-nginx
-  links:
-    - piwigo-data
-    - piwigo-fpm
   ports:
     - "8081:80"
   volumes_from:
-    - piwigo-data
-  volumes:
-    - /srv/piwigo/galleries:/var/www/piwigo/galleries
-    - /srv/piwigo/upload:/var/www/piwigo/upload
+    - piwigo-fpm
 
 piwigo-fpm:
   build: .
   dockerfile: Dockerfile.fpm
   container_name: piwigo-fpm
-  expose:
-    - "9000"
+  volumes_from:
+    - piwigo-data
+  volumes:
+    - /srv/piwigo/galleries:/var/www/piwigo/galleries
+    - /srv/piwigo/upload:/var/www/piwigo/upload
 
 piwigo-data:
   build: .
