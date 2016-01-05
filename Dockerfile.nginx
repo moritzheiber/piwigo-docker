@@ -19,7 +19,11 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 ADD nginx-nginx.conf /etc/nginx/nginx.conf
 
-VOLUME ["/var/cache/nginx"]
+VOLUME [
+  "/var/www/piwigo/galleries",
+  "/var/www/piwigo/upload",
+  "/var/cache/nginx"
+]
 
 EXPOSE 80
 
