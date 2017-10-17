@@ -6,6 +6,8 @@ piwigo-nginx:
     - "8081:80"
   volumes_from:
     - piwigo-fpm
+  links:
+    - "piwigo-fpm:fpm"
 
 piwigo-fpm:
   build: .
@@ -16,6 +18,14 @@ piwigo-fpm:
   volumes:
     - /srv/piwigo/galleries:/var/www/piwigo/galleries
     - /srv/piwigo/upload:/var/www/piwigo/upload
+  links:
+    - "mysql:mysql"
+
+mysql:
+  image: mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: "piwigo"
+    MYSQL_DATABASE: "piwigo"
 
 piwigo-data:
   build: .

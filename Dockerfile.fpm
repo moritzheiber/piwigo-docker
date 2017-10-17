@@ -1,19 +1,11 @@
-FROM ubuntu:latest
+FROM alpine:3.6
 MAINTAINER hello@heiber.im
 
-ENV DEBIAN_FRONTEND noninteractive
+RUN apk --no-cache add php5 php5-fpm php5-gd php5-mysql && \
+  mkdir -p /run/php /var/www
 
-RUN apt-get update -qq && apt-get install -y software-properties-common
-
-RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
-
-RUN apt-add-repository -y ppa:ondrej/php5-5.6 && apt-get update -qq
-
-RUN apt-get install -y php5-fpm php5-gd php5-mysql && mkdir -p /run/php /var/www
-ADD fpm-www.conf /etc/php5/fpm/pool.d/www.conf
+ADD fpm-www.conf /etc/php5/php-fpm.conf
 
 VOLUME ["/run/php"]
 
-CMD ["/usr/sbin/php5-fpm"]
+CMD ["/usr/bin/php-fpm5"]
