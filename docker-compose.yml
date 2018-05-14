@@ -1,33 +1,18 @@
-piwigo-nginx:
-  build: .
-  dockerfile: Dockerfile.nginx
-  container_name: piwigo-nginx
-  ports:
-    - "8081:80"
-  volumes_from:
-    - piwigo-fpm
-  links:
-    - "piwigo-fpm:fpm"
+version: "3"
+services:
+  piwigo:
+    build: .
+    network_mode: bridge
+    ports:
+      - "8000:8000"
+    links:
+      - mysql
 
-piwigo-fpm:
-  build: .
-  dockerfile: Dockerfile.fpm
-  container_name: piwigo-fpm
-  volumes_from:
-    - piwigo-data
-  volumes:
-    - /srv/piwigo/galleries:/var/www/piwigo/galleries
-    - /srv/piwigo/upload:/var/www/piwigo/upload
-  links:
-    - "mysql:mysql"
-
-mysql:
-  image: mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: "piwigo"
-    MYSQL_DATABASE: "piwigo"
-
-piwigo-data:
-  build: .
-  dockerfile: Dockerfile.piwigo
-  container_name: piwigo-data
+  mysql:
+    image: mysql:5
+    network_mode: bridge
+    environment:
+      MYSQL_USER: "piwigo"
+      MYSQL_PASSWORD: "piwigo"
+      MYSQL_DATABASE: "piwigo"
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
