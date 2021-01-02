@@ -1,6 +1,7 @@
-version: "3.6"
+version: '3'
 services:
   piwigo:
+    container_name: piwigo
     image: piwigo-docker
     networks:
       - piwigo
@@ -8,6 +9,7 @@ services:
       - "8000:8000"
 
   mysql:
+    container_name: piwigo_mysql
     image: mysql:8.0.18
     command: ["--default-authentication-plugin=mysql_native_password"]
     networks:
