@@ -1,10 +1,10 @@
 FROM alpine:3.10.3
 LABEL maintainer="Moritz Heiber <hello@heiber.im>"
 
-ENV PIWIGO_VERSION="2.10.1" \
-  PIWIGO_CHECKSUM="4967bc5ebca1eae5b20cdd5849dc2e1628e281c400d73d12d116d4381e4d432b"
+ENV PIWIGO_VERSION="2.10.2" \
+  PIWIGO_CHECKSUM="0de75de7da9d9b8058e208cf78d6f20852a790fca6d8231d432f3f62d12939ff"
 
-RUN set -x && apk --no-cache add curl php7 php7-gd php7-mysqli php7-session && \
+RUN set -x && apk --no-cache add curl php7 php7-gd php7-mysqli php7-json php7-session && \
   curl -Lo /tmp/piwigo.zip "http://piwigo.org/download/dlcounter.php?code=${PIWIGO_VERSION}" && \
   echo "${PIWIGO_CHECKSUM}  /tmp/piwigo.zip" | sha256sum -wsc - && \
   adduser -h /piwigo -DS piwigo && \
