@@ -1,8 +1,8 @@
 FROM alpine:3.10.3
 LABEL maintainer="Moritz Heiber <hello@heiber.im>"
 
-ENV PIWIGO_VERSION="2.10.2" \
-  PIWIGO_CHECKSUM="0de75de7da9d9b8058e208cf78d6f20852a790fca6d8231d432f3f62d12939ff"
+ENV PIWIGO_VERSION="12.2.0" \
+  PIWIGO_CHECKSUM="824ee83f46654b68962263567f2957933d75b2bac016e6dbb9ea9df9a2a86e88"
 
 RUN set -x && apk --no-cache add curl php7 php7-gd php7-mysqli php7-json php7-session php7-exif && \
   curl -Lo /tmp/piwigo.zip "http://piwigo.org/download/dlcounter.php?code=${PIWIGO_VERSION}" && \
